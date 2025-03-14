@@ -8,6 +8,8 @@ const creditPackageRouter = require('./routes/creditPackage')
 const skillRouter = require('./routes/skill')
 const usersRouter = require('./routes/users')
 const adminRouter = require('./routes/admin')
+const coachRouter = require('./routes/coaches')
+const courseRouter = require('./routes/courses')
 
 const app = express()
 app.use(cors())
@@ -23,6 +25,7 @@ app.use(pinoHttp({
   }
 }))
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.json({ limit: '10kb' })); // 限制 10KB
 
 app.get('/healthcheck', (req, res) => {
   res.status(200)
@@ -32,6 +35,8 @@ app.use('/api/credit-package', creditPackageRouter)
 app.use('/api/coaches/skill', skillRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/admin', adminRouter)
+app.use('/api/coaches', coachRouter)
+app.use('/api/courses', courseRouter)
 
 // 404
 app.use((req, res, next) => {
